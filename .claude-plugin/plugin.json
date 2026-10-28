@@ -1,0 +1,10 @@
+{
+  "name": "mobile-release-guard",
+  "version": "0.1.0",
+  "description": "Hard pre-release gate for mobile apps: blocks releases that would log out, crash or lose data for users updating from the store version (build reproducibility, dependency drift, persistence changes, upgrade test).",
+  "author": {
+    "name": "tungdevpro",
+    "email": "tungdm@digitran.info"
+  },
+  "keywords": ["mobile", "ios", "android", "flutter", "react-native", "release", "upgrade", "migration"]
+}

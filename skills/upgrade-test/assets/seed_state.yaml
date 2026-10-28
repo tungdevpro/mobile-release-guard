@@ -1,0 +1,31 @@
+# Upgrade test - step 1: run on the OLD version to create real user state.
+# Copy into your app repo (e.g. .maestro/upgrade/seed_state.yaml) and replace
+# the login steps with your app's selectors. Prefer ids (accessibilityIdentifier
+# / testTag / Key) over text so the flow survives copy changes.
+#
+# Variables come from `-e KEY=VALUE`: APP_ID (set by upgrade_test.sh),
+# TEST_USER, TEST_PASSWORD.
+appId: ${APP_ID}
+name: "upgrade-test: seed state on OLD build"
+---
+- launchApp:
+    appId: ${APP_ID}
+    clearState: false          # never clear: we are testing state survival
+- tapOn:
+    id: "login_email"
+- inputText: ${TEST_USER}
+- tapOn:
+    id: "login_password"
+- inputText: ${TEST_PASSWORD}
+- hideKeyboard
+- tapOn:
+    id: "login_submit"
+- extendedWaitUntil:
+    visible:
+      id: "home_screen"
+    timeout: 20000
+# Create the kind of data your users have, so the new version must read it.
+# Examples: change a setting, accept onboarding, save a favourite, a draft...
+# - tapOn: { id: "settings_tab" }
+# - tapOn: { id: "toggle_notifications" }
+- stopApp

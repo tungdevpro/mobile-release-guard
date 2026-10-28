@@ -1,0 +1,14 @@
+{
+  "name": "tungdevpro",
+  "owner": {
+    "name": "tungdevpro",
+    "email": "tungdm@digitran.info"
+  },
+  "plugins": [
+    {
+      "name": "mobile-release-guard",
+      "source": "./",
+      "description": "Pre-release gate that prevents upgrade-path bugs (logout / crash / data loss after store update)."
+    }
+  ]
+}

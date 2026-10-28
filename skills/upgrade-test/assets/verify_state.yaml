@@ -1,0 +1,33 @@
+# Upgrade test - step 2: run on the NEW version, installed over the old one.
+# Passes only if the user is still logged in and their data is still there,
+# across two cold starts (migrations must be idempotent).
+appId: ${APP_ID}
+name: "upgrade-test: verify state after in-place upgrade"
+---
+- launchApp:
+    appId: ${APP_ID}
+    clearState: false
+# Dismiss "what's new" / permission dialogs your new version may show:
+# - runFlow:
+#     when: { visible: { id: "whats_new_close" } }
+#     commands: [ { tapOn: { id: "whats_new_close" } } ]
+- extendedWaitUntil:
+    visible:
+      id: "home_screen"
+    timeout: 20000
+- assertNotVisible:
+    id: "login_submit"
+# Assert the data seeded on the old version is still there:
+# - tapOn: { id: "settings_tab" }
+# - assertVisible: { id: "toggle_notifications", checked: true }
+- stopApp
+# Second cold start: catches migrations that run twice or only half-complete.
+- launchApp:
+    appId: ${APP_ID}
+    clearState: false
+- extendedWaitUntil:
+    visible:
+      id: "home_screen"
+    timeout: 20000
+- assertNotVisible:
+    id: "login_submit"
